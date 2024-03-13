@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: Weekly Data Updater
- * Description: A plugin to fetch, process, and display weekly data.
+ * Plugin Name: Weekly Diesel Fuel Sucharge Updater For Vancouver, BC region
+ * Description: A plugin to fetch, process, and display weekly diesel fuel sucharge for Vancouver, BC region.
  * Version: 1.3
  */
 
