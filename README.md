@@ -1,27 +1,48 @@
-Weekly Diesel Fuel Sucharge Updater For Vancouver, BC region
+# Weekly Diesel Fuel Sucharge Updater For Vancouver, BC region for WordPress
 
-The Weekly Data Updater is a custom WordPress plugin designed to fetch, process, and display weekly data related to fuel surcharges. It automatically updates a table with the latest data from an Excel file and displays this information via a shortcode.
+The Weekly Diesel Fuel Sucharge Updater For Vancouver, BC region is a WordPress plugin designed to automate the process of fetching, processing, and displaying weekly data, specifically focusing on fuel surcharge percentages. This plugin simplifies the management of dynamic data within WordPress, ensuring your site always displays the most current information.
 
-Features
-Automatically schedules weekly updates to fetch new data.
-Processes data from an Excel file and updates the WordPress database.
-Displays the latest weekly data in a table format with a shortcode.
-Highlights the most current data row.
-Installation
-Download the plugin files and upload them to your WordPress plugin directory: /wp-content/plugins/weekly-data-updater
-Navigate to the WordPress admin area and go to Plugins.
-Locate "Weekly Diesel Fuel Sucharge Updater For Vancouver, BC region" in the plugin list and click "Activate".
-Usage
-To display the weekly data table, use the shortcode [my_table] in your posts or pages. The table will automatically update each week with the latest data fetched by the plugin.
+## Features
 
-Customization
-The plugin is designed to work out of the box, but you can modify it to meet specific requirements. Customizations may include changing the source URL for the Excel file, adjusting the table styling, or modifying the data processing logic.
+- **Automated Data Fetching**: Automatically downloads Excel files containing the latest data on a weekly schedule.
+- **Data Processing**: Parses Excel files and updates WordPress database with new data.
+- **Shortcode Integration**: Provides a shortcode `[my_table]` for easy insertion of the data table into posts and pages.
+- **Highlight Current Week**: Automatically highlights the row corresponding to the current week, enhancing user comprehension.
 
-Requirements
-WordPress 5.0 or higher
-PHP 7.4 or higher
-Contributing
-Contributions to the plugin are welcome! Please feel free to submit pull requests or create issues for bugs and feature requests on the plugin's GitHub repository.
+## Installation
 
-License
-The Weekly Data Updater plugin is open-sourced software licensed under the MIT license.
+To install the Weekly Data Updater plugin:
+
+1. Clone this repository or download the ZIP file.
+2. Upload the plugin files to the `/wp-content/plugins/weekly-data-updater` directory on your WordPress site.
+3. Activate the plugin through the 'Plugins' menu in WordPress.
+
+## Usage
+
+Insert the shortcode `[my_table]` in any post or page where you want the weekly data table to appear. The plugin takes care of the rest, ensuring your table is always up-to-date.
+
+## Customization
+
+The plugin is designed for flexibility. Users can customize the source URL for the Excel data, adjust the styling of the displayed table, or modify the logic for processing the Excel file as needed.
+
+## Development
+
+This plugin welcomes contributions from the community. To develop or contribute:
+
+1. Clone the repository in GitHub Codespaces or your local development environment.
+2. Make your changes, test thoroughly.
+3. Submit a pull request with a clear description of your changes or enhancements.
+
+## Requirements
+
+- WordPress 5.0+
+- PHP 7.4+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Special thanks to all contributors who help maintain and enhance this project.
+- Acknowledgment to data providers or any third-party services integrated with this plugin.
