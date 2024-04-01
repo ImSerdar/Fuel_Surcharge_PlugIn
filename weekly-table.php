@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: Weekly Diesel Fuel Sucharge Updater For Vancouver, BC region
- * Description: A plugin to fetch, process, and display weekly diesel fuel sucharge for Vancouver, BC region.
+ * Plugin Name: Weekly Data Updater
+ * Description: A plugin to fetch, process, and display weekly data.
  * Version: 1.3
  */
 
@@ -80,46 +80,58 @@ function update_table_data() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'weekly_data';
 
-    foreach ($worksheet->getRowIterator(2) as $row) {
-        $cellIterator = $row->getCellIterator();
-        $cellIterator->setIterateOnlyExistingCells(false);
+    $highestColumn = $worksheet->getHighestColumn();
+    $highestColumnIndex = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highestColumn);
 
-        $cells = [];
-        foreach ($cellIterator as $cell) {
-            $cells[] = $cell->getValue();
+    for ($col = 2; $col <= $highestColumnIndex; $col++) {
+        $priceCell = $worksheet->getCellByColumnAndRow($col, 5);
+        $dateCell = $worksheet->getCellByColumnAndRow($col, 3);
+
+        if (!empty($priceCell->getValue())) {
+            $week_ending = new DateTime($dateCell->getValue());
+            $week_ending->modify('+3 days');
+
+            $price = $priceCell->getValue();
+            $ltl = calculateFuelSurchargePercentage($price);
+            $tl = number_format($ltl + 15, 2);
+
+            // Check if the entry for this week already exists
+            $existing = $wpdb->get_var($wpdb->prepare(
+                "SELECT COUNT(*) FROM $table_name WHERE week_ending = %s",
+                $week_ending->format('Y-m-d')
+            ));
+
+            if ($existing > 0) {
+                // Update the existing record
+                $wpdb->update(
+                    $table_name,
+                    ['price' => $price, 'ltl' => $ltl, 'tl' => $tl], // values
+                    ['week_ending' => $week_ending->format('Y-m-d')], // where
+                    ['%f', '%s', '%s'], // value formats
+                    ['%s'] // where formats
+                );
+            } else {
+                // Insert a new record
+                $wpdb->insert(
+                    $table_name,
+                    [
+                        'week_ending' => $week_ending->format('Y-m-d'),
+                        'price' => $price,
+                        'ltl' => $ltl,
+                        'tl' => $tl
+                    ],
+                    ['%s', '%f', '%s', '%s']
+                );
+            }
         }
-
-        // Assuming the columns are: Date, Price, LTL, TL
-        // Adjust the indices based on your Excel file's structure
-        $week_ending = date('Y-m-d', strtotime($cells[0]));
-        $price = $cells[1];
-        $ltl = calculateFuelSurchargePercentage($price);
-        $tl = number_format($ltl + 15, 2);
-
-        $wpdb->replace(
-            $table_name,
-            [
-                'week_ending' => $week_ending,
-                'price' => $price,
-                'ltl' => $ltl,
-                'tl' => $tl
-            ],
-            [
-                '%s',
-                '%f',
-                '%s',
-                '%s'
-            ]
-        );
-    } 
+    }
 }
-
 // Define the shortcode to display the table
 function table_shortcode() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'weekly_data';
     
-    $results = $wpdb->get_results("SELECT * FROM $table_name ORDER BY week_ending DESC", ARRAY_A);
+    $results = $wpdb->get_results("SELECT DISTINCT *  FROM $table_name ORDER BY week_ending DESC LIMIT 6", ARRAY_A);
     if (empty($results)) {
         return "<p style='color: white;'>No data available.</p>";
     }
