@@ -13,10 +13,15 @@ The Weekly Diesel Fuel Sucharge Updater For Vancouver, BC region is a WordPress 
 
 To install the Weekly Data Updater plugin:
 
-1. Clone this repository or download the ZIP file.
-2. Upload the plugin files to the `/wp-content/plugins/weekly-data-updater` directory on your WordPress site.
+1. Clone this repository or download the ZIP file.  
+2. Upload the plugin files to the `/wp-content/plugins/weekly-data-updater` directory on your WordPress site.  
+   - **Install Composer dependencies**  
+     ```bash
+     cd wp-content/plugins/weekly-data-updater
+     composer require phpoffice/phpspreadsheet
+     ```  
+   - **Be sure** the resulting `vendor/` folder is deployed alongside the plugin files so that `vendor/autoload.php` can be required.  
 3. Activate the plugin through the 'Plugins' menu in WordPress.
-
 ## Usage
 
 Insert the shortcode `[my_table]` in any post or page where you want the weekly data table to appear. The plugin takes care of the rest, ensuring your table is always up-to-date.
