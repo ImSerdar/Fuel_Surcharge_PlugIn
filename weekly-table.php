@@ -54,7 +54,7 @@ register_activation_hook(__FILE__, 'create_history_table');
 
 // Update the weekly data table with new data from an Excel file
 function update_table_data() {
-    $url = 'https://charting.kalibrate.com/WPPS/Diesel/Retail%20(Incl.%20Tax)/WEEKLY/2024/Diesel_Retail%20(Incl.%20Tax)_WEEKLY_2024.xlsx';
+    $url = 'https://charting.kalibrate.com/WPPS/Diesel/Retail%20(Incl.%20Tax)/WEEKLY/2025/Diesel_Retail%20(Incl.%20Tax)_WEEKLY_2025.xlsx';
 
     $response = wp_remote_get($url);
     if (is_wp_error($response)) {
